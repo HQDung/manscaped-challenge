@@ -4,4 +4,9 @@
 
 html, body, #root {
   @apply h-full;
+  color: #1D1D1D;
+}
+
+a {
+  @apply hover:underline;
 }
