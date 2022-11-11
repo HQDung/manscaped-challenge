@@ -1,0 +1,11 @@
+.modal__header {
+  @apply flex items-center justify-between w-full max-w-sm mb-6;
+}
+
+.modal__title {
+  @apply font-bold text-lg capitalize;
+}
+
+.modal__button--close {
+  @apply px-2 py-1.5 text-xs text-white rounded-full bg-gray-300 transition-all ease-in-out hover:shadow-lg hover:bg-gray-400
+}

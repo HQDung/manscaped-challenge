@@ -1,0 +1,4 @@
+.button {
+  @apply p-3 text-white font-semibold rounded focus:outline-none transition-all hover:shadow-lg active:scale-95;
+  background: #757575;
+}

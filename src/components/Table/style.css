@@ -1,0 +1,12 @@
+.table-head {
+  @apply uppercase text-center p-1
+}
+
+.table-row {
+  border-bottom: 1px solid #E6E6E6;
+}
+
+.table-cell {
+  @apply p-1 py-3;
+  height: 85px;
+}
