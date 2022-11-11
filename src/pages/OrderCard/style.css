@@ -1,0 +1,4 @@
+.order-card {
+  @apply h-full flex items-center justify-center;
+  background: #F4F5F7;
+}
