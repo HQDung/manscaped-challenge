@@ -1,7 +1,8 @@
 import React from "react";
+import Input from "../Input";
 import "./style.css";
 
-type colType = "img" | "money" | "number" | "custom";
+type colType = "img" | "money" | "number" | "custom" | "input";
 type colAlign = "left" | "center" | "right";
 
 export interface Column {
@@ -10,6 +11,7 @@ export interface Column {
   type?: colType;
   render?: Function;
   align?: colAlign;
+  onChange?: Function;
 }
 
 export interface TableFooter {
@@ -28,11 +30,21 @@ const Table: React.FC<TableProps> = ({ columns, rows, footer }) => {
     const value = row[col.id];
     switch (col.type) {
       case "img":
-        return <img src={value} width={60} />;
+        return value ? (
+          <img src={value} width={60} alt={`item ${col.id}`} />
+        ) : null;
       case "money":
         return `$${value}`;
       case "custom":
-        return col.render?.(value);
+        return col.render?.(col.id, row);
+      case "input":
+        return (
+          <Input
+            name={col.id}
+            value={value}
+            onChange={(e) => col.onChange?.(e, row.id)}
+          />
+        );
       default:
         return value;
     }
