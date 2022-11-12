@@ -1,14 +1,14 @@
 import React, { useCallback, useState } from "react";
 import formatDate from "../../utils/formatDate";
 import { orderDetails } from "../../data";
-import { Product, Shipping } from "../../models/type";
+import { OrderInfo, Product, Shipping } from "../../models/type";
 import Button from "../../components/Button";
 import InputField from "./InputField";
 import ProductTable from "./ProductTable";
 
 function DashboardPage() {
   const { shipping, items, ...rest } = orderDetails;
-  const [order, setOrder] = useState(rest);
+  const [order, setOrder] = useState<OrderInfo>(rest);
   const [shippingInfo, setShippingInfo] = useState<Shipping>(shipping);
   const [products, setProducts] = useState<Product[]>(items);
 

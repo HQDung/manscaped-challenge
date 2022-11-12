@@ -12,12 +12,10 @@ export interface Shipping {
   city: string;
   country: string;
 }
-export interface Order {
+export interface OrderInfo {
   id: string;
   created: string;
   updated: string;
-  items: Product[];
   total: number;
-  shipping: Shipping;
   tags: string[];
 }
