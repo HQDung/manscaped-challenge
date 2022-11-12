@@ -1,21 +1,29 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import OrderCardPage from "./pages/OrderCard";
-import DashboardLayout from "./layout/Dashboard";
+import { lazy, Suspense } from "react";
+import { Routes, Route, Outlet } from "react-router-dom";
+
+const OrderCardPage = lazy(() => import("./pages/OrderCard"));
+const DashboardLayout = lazy(() => import("./layout/Dashboard"));
+const DashboardPage = lazy(() => import("./pages/Dashboard"));
 
 function App() {
   return (
-    <Routes>
-      <Route
-        path="/"
-        // element={<Layout />}
-      >
-        <Route index element={<OrderCardPage />} />
-      </Route>
-      <Route path="/dashboard" element={<DashboardLayout />}>
-        <Route index element={<OrderCardPage />} />
-      </Route>
-    </Routes>
+    <Suspense fallback={<div className="h-full w-full"> Loading...</div>}>
+      <Routes>
+        <Route path="/">
+          <Route index element={<OrderCardPage />} />
+        </Route>
+        <Route
+          path="/dashboard"
+          element={
+            <DashboardLayout>
+              <Outlet />
+            </DashboardLayout>
+          }
+        >
+          <Route index element={<DashboardPage />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }
 

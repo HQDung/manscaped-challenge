@@ -7,14 +7,14 @@ export const orderDetails = {
   updated: "2021-03-06T00:00:00.000Z",
   items: [
     {
-      id: "p01",
+      id: "1",
       name: "Ultricies Nibh",
       qty: 2,
-      price: 17.98,
+      price: 8.99,
       img: product1,
     },
     {
-      id: "p02",
+      id: "2",
       name: "Fringilla Sollicitudin Consectetur",
       qty: 1,
       price: 14.99,
