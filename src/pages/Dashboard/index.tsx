@@ -26,28 +26,48 @@ function DashboardPage() {
 
   const handleBasicInfoChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setOrder({ ...order, [e.target.name]: e.target.value });
+      setOrder((newOrder) => ({
+        ...newOrder,
+        [e.target.name]: e.target.value,
+      }));
     },
     []
   );
 
   const handleShippingInfoChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setShippingInfo({ ...shippingInfo, [e.target.name]: e.target.value });
+      setShippingInfo((newInfo) => ({
+        ...newInfo,
+        [e.target.name]: e.target.value,
+      }));
     },
     []
   );
 
+  const handleProductsChange = useCallback((data: Product[]) => {
+    setProducts(data);
+    const total = +Number(
+      data.reduce<number>((prev, cur) => {
+        prev += cur.price * cur.qty;
+        return prev;
+      }, 0)
+    ).toFixed(2);
+    setOrder((newOrder) => ({
+      ...newOrder,
+      total,
+    }));
+  }, []);
+
   const handleSave = () => {
     const newOrderDetails = {
       ...order,
-      shipping: { ...shipping },
+      shipping: { ...shippingInfo },
       items: [...products],
     };
     dispatch(updateOrder(newOrderDetails));
     setTimeout(() => {
       setSavedIndicatorHidden(false);
-    }, 300);
+    }, 200);
   };
 
   return (
@@ -102,7 +122,14 @@ function DashboardPage() {
         />
       </section>
       <section className="space-y-4 border-b pb-4 mb-4">
-        <ProductTable products={products} onChange={setProducts} />
+        <ProductTable
+          products={products}
+          onChange={handleProductsChange}
+          footer={{
+            label: "Total",
+            value: `$${order.total}`,
+          }}
+        />
       </section>
       <footer className="text-center">
         <Button title="Save" onClick={handleSave} />

@@ -1,15 +1,20 @@
 import React, { useCallback, useState } from "react";
 import { Product } from "../../models/type";
-import Table, { Column } from "../../components/Table";
+import Table, { Column, TableFooter } from "../../components/Table";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 
 interface ProductTableProps {
   products: Product[];
-  onChange: React.Dispatch<React.SetStateAction<Product[]>>;
+  onChange: Function;
+  footer?: TableFooter;
 }
 
-const ProductTable: React.FC<ProductTableProps> = ({ products, onChange }) => {
+const ProductTable: React.FC<ProductTableProps> = ({
+  products,
+  onChange,
+  footer,
+}) => {
   const [deleteProductId, setDeleteDeleteProductId] = useState<
     string | undefined
   >();
@@ -26,7 +31,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, onChange }) => {
 
   const handleAddProduct = () => {
     const newProduct: Product = {
-      id: `${products.length + 1}`,
+      id: `${new Date().getTime()}`,
       name: "",
       qty: 1,
       price: 0,
@@ -46,7 +51,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, onChange }) => {
   );
 
   const renderTotalPrice = (colId: string, row: any) =>
-    `$${row.price * row.qty}`;
+    `$${Number(row.price * row.qty).toFixed(2)}`;
 
   const renderActions = (colId: string, row: any) => (
     <button className="text-red-600" onClick={openModal(row.id)}>
@@ -79,6 +84,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, onChange }) => {
       label: "TOTAL PRICE",
       type: "custom",
       align: "center",
+      width: 150,
       render: renderTotalPrice,
     },
     {
@@ -86,6 +92,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, onChange }) => {
       label: "ACTION",
       type: "custom",
       align: "center",
+      width: 75,
       render: renderActions,
     },
   ];
@@ -93,7 +100,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, onChange }) => {
   return (
     <>
       <h2 className="font-bold">Products:</h2>
-      <Table columns={columns} rows={products} />
+      <Table columns={columns} rows={products} footer={footer} />
       <div className="text-right">
         <Button title="Add Product" onClick={handleAddProduct} />
       </div>

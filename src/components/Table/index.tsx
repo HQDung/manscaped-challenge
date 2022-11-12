@@ -12,6 +12,7 @@ export interface Column {
   render?: Function;
   align?: colAlign;
   onChange?: Function;
+  width?: string | number;
 }
 
 export interface TableFooter {
@@ -57,7 +58,10 @@ const Table: React.FC<TableProps> = ({ columns, rows, footer }) => {
           {columns.map((col: Column) => (
             <th
               key={`col_${col.id}`}
-              style={{ textAlign: col.align || "left" }}
+              style={{
+                textAlign: col.align || "left",
+                width: col.width || "auto",
+              }}
             >
               {col.label}
             </th>
