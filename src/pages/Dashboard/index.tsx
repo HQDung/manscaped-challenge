@@ -1,16 +1,28 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { selectOrderDetails, updateOrder } from "../App/appSlice";
 import formatDate from "../../utils/formatDate";
-import { orderDetails } from "../../data";
 import { OrderInfo, Product, Shipping } from "../../models/type";
 import Button from "../../components/Button";
 import InputField from "./InputField";
 import ProductTable from "./ProductTable";
 
 function DashboardPage() {
+  const dispatch = useDispatch();
+  const orderDetails = useSelector(selectOrderDetails);
   const { shipping, items, ...rest } = orderDetails;
   const [order, setOrder] = useState<OrderInfo>(rest);
   const [shippingInfo, setShippingInfo] = useState<Shipping>(shipping);
   const [products, setProducts] = useState<Product[]>(items);
+  const [savedIndicatorHidden, setSavedIndicatorHidden] =
+    useState<boolean>(true);
+
+  useEffect(() => {
+    if (!savedIndicatorHidden)
+      setTimeout(() => {
+        setSavedIndicatorHidden(true);
+      }, 3000);
+  }, [savedIndicatorHidden]);
 
   const handleBasicInfoChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +37,18 @@ function DashboardPage() {
     },
     []
   );
+
+  const handleSave = () => {
+    const newOrderDetails = {
+      ...order,
+      shipping: { ...shipping },
+      items: [...products],
+    };
+    dispatch(updateOrder(newOrderDetails));
+    setTimeout(() => {
+      setSavedIndicatorHidden(false);
+    }, 300);
+  };
 
   return (
     <div className="max-w-screen-lg mx-auto">
@@ -81,7 +105,14 @@ function DashboardPage() {
         <ProductTable products={products} onChange={setProducts} />
       </section>
       <footer className="text-center">
-        <Button title="Save" onClick={() => {}} />
+        <Button title="Save" onClick={handleSave} />
+        <span
+          className={`text-xl text-green-500 p-3 ${
+            savedIndicatorHidden ? "invisible" : "visible"
+          }`}
+        >
+          &#10003;
+        </span>
       </footer>
     </div>
   );

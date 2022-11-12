@@ -1,9 +1,9 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 
-const OrderCardPage = lazy(() => import("./pages/OrderCard"));
-const DashboardLayout = lazy(() => import("./layout/Dashboard"));
-const DashboardPage = lazy(() => import("./pages/Dashboard"));
+const OrderCardPage = lazy(() => import("../OrderCard"));
+const DashboardLayout = lazy(() => import("../../layout/Dashboard"));
+const DashboardPage = lazy(() => import("../Dashboard"));
 
 function App() {
   return (

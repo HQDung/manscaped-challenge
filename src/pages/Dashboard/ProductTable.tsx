@@ -42,7 +42,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, onChange }) => {
         )
       );
     },
-    []
+    [products]
   );
 
   const renderTotalPrice = (colId: string, row: any) =>

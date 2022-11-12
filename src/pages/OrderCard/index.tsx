@@ -1,5 +1,6 @@
+import { useSelector } from "react-redux";
+import { selectOrderDetails } from "../App/appSlice";
 import formatDate from "../../utils/formatDate";
-import { orderDetails } from "../../data";
 import CancelBtn from "./CancelBtn";
 import RefundBtn from "./RefundBtn";
 import ResendConfirmationBtn from "./ResendConfirmationBtn";
@@ -9,6 +10,8 @@ import ProductTable from "./ProductTable";
 import "./style.css";
 
 function OrderCardPage() {
+  const orderDetails = useSelector(selectOrderDetails);
+
   return (
     <div className="order-card">
       <main className="max-w-3xl py-4 px-8 w-full">
@@ -17,12 +20,22 @@ function OrderCardPage() {
             <b>Order</b> {orderDetails.id}
           </p>
           <div className="text-right text-sm">
-            <p>Created on {formatDate(orderDetails.created)}</p>
-            <p>Last updated on {formatDate(orderDetails.created)}</p>
+            <p>
+              Created on <time>{formatDate(orderDetails.created)}</time>
+            </p>
+            <p>
+              Last updated on <time>{formatDate(orderDetails.updated)}</time>
+            </p>
           </div>
         </div>
         <div className="mt-6 bg-white p-6 space-y-5">
-          <ProductTable rows={orderDetails.items} />
+          <ProductTable
+            rows={orderDetails.items}
+            footer={{
+              label: "Total",
+              value: `$${orderDetails.total}`,
+            }}
+          />
           <section className="leading-6 text-sm">
             <p className="font-bold uppercase">Shipping Address</p>
             <p>{orderDetails.shipping.name}</p>
