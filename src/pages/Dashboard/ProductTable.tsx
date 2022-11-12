@@ -91,14 +91,12 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, onChange }) => {
   ];
 
   return (
-    <div className="max-w-screen-lg mx-auto">
-      <section className="space-y-4 border-b pb-4 mb-4">
-        <h2 className="font-bold">Products:</h2>
-        <Table columns={columns} rows={products} />
-        <div className="text-right">
-          <Button title="Add Product" onClick={handleAddProduct} />
-        </div>
-      </section>
+    <>
+      <h2 className="font-bold">Products:</h2>
+      <Table columns={columns} rows={products} />
+      <div className="text-right">
+        <Button title="Add Product" onClick={handleAddProduct} />
+      </div>
       <Modal
         title="Delete Product"
         isOpen={!!deleteProductId}
@@ -110,7 +108,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ products, onChange }) => {
           <Button title="No" onClick={closeModal} />
         </div>
       </Modal>
-    </div>
+    </>
   );
 };
 
