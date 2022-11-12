@@ -1,14 +1,14 @@
 import React from "react";
-import { orderDetails } from "../../data";
-import Table, { Column } from "../../components/Table";
+import Table, { Column, TableFooter } from "../../components/Table";
 import { Link } from "react-router-dom";
 import { Product } from "../../models/type";
 
 interface ProductTableProps {
   rows: Product[];
+  footer: TableFooter;
 }
 
-const ProductTable: React.FC<ProductTableProps> = ({ rows }) => {
+const ProductTable: React.FC<ProductTableProps> = ({ rows, footer }) => {
   const renderProductName = (colId: string, row: any) => (
     <Link to="#">{row[colId]}</Link>
   );
@@ -29,12 +29,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ rows }) => {
     },
   ];
 
-  const orderItemsFooter = {
-    label: "Total",
-    value: `$${orderDetails.total}`,
-  };
-
-  return <Table columns={columns} rows={rows} footer={orderItemsFooter} />;
+  return <Table columns={columns} rows={rows} footer={footer} />;
 };
 
 export default React.memo(ProductTable);
